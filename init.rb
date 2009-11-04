@@ -1,8 +1,11 @@
 require 'redmine'
 
 Redmine::Plugin.register :redmine_merge_redmine do
-  name 'Redmine Merge Redmine plugin'
-  author 'Author name'
-  description 'This is a plugin for Redmine'
+  author 'Eric Davis'
+  url 'https://projects.littlestreamsoftware.com/projects'
+  author_url 'http://www.littlestreamsoftware.com'
+  description 'A plugin to merge two Redmine databases'
   version '0.0.1'
+
+  requires_redmine :version_or_higher => '0.8.0'
 end
