@@ -16,6 +16,7 @@ if Rails.env == "test"
   end
 end
 
+require 'second_database'
 
 Redmine::Plugin.register :redmine_merge_redmine do
   author 'Eric Davis'

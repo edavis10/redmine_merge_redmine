@@ -1,4 +1,4 @@
 class SourceUser < ActiveRecord::Base
-  establish_connection :source_redmine
+  include SecondDatabase
   set_table_name :users
 end

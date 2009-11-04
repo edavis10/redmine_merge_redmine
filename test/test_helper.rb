@@ -20,3 +20,14 @@ def User.generate_with_protected!(attributes={})
   user.save!
   user
 end
+
+# Override the actual second database connection code in order to test
+# against a known database
+module SecondDatabase
+  def self.included(base)
+    base.class_eval do
+      establish_connection("adapter" => 'sqlite3', "database" => File.expand_path(File.dirname(__FILE__) + '/test_database.sqlite3'))
+    end
+  end
+  
+end
