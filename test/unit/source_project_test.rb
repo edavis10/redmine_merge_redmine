@@ -42,5 +42,17 @@ class SourceProjectTest < Test::Unit::TestCase
       assert project.enabled_modules.collect(&:name).include?('time_tracking')
       assert project.enabled_modules.collect(&:name).include?('issue_tracking')
     end
+
+    should "add the project's trackers" do
+      SourceTracker.migrate
+      SourceProject.migrate
+
+      project = Project.find_by_identifier('subproject1')
+
+      assert project
+      assert_equal 2, project.trackers.length
+      assert project.trackers.include?(Tracker.find_by_name('Feature request'))
+      assert project.trackers.include?(Tracker.find_by_name('Support request'))
+    end
   end
 end
