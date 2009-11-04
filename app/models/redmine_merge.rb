@@ -1,5 +1,5 @@
 class RedmineMerge
   def self.migrate
-    puts SourceUser.count
+    SourceUser.migrate
   end
 end
