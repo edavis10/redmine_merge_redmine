@@ -29,5 +29,18 @@ class SourceProjectTest < Test::Unit::TestCase
 
       assert_equal 1, Project.count(:conditions => {:identifier => 'onlinestore'})
     end
+
+    should "enable the modules for each project" do
+      SourceProject.migrate
+
+      project = Project.find_by_identifier('subproject1')
+
+      assert project
+      assert_equal 4, project.enabled_modules.length
+      assert project.enabled_modules.collect(&:name).include?('repository')
+      assert project.enabled_modules.collect(&:name).include?('wiki')
+      assert project.enabled_modules.collect(&:name).include?('time_tracking')
+      assert project.enabled_modules.collect(&:name).include?('issue_tracking')
+    end
   end
 end
