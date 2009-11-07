@@ -3,9 +3,13 @@ class RedmineMerge
     SourceUser.migrate
     SourceCustomField.migrate
     SourceTracker.migrate
+    SourceIssueStatus.migrate
+
+    # Project-specific data
     SourceProject.migrate
     SourceVersion.migrate
     SourceNews.migrate
+    SourceIssueCategory.migrate
   end
 
   class Mapper
