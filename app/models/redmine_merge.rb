@@ -5,6 +5,7 @@ class RedmineMerge
     SourceTracker.migrate
     SourceProject.migrate
     SourceVersion.migrate
+    SourceNews.migrate
   end
 
   class Mapper
