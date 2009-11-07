@@ -4,7 +4,7 @@ class SourceIssueCategory < ActiveRecord::Base
 
   def self.migrate
     all.each do |source_issue_category|
-      next if IssueCategory.find_by_name(source_issue_category)
+      next if IssueCategory.find_by_name_and_project_id(source_issue_category.name, source_issue_category.project_id)
 
       ic = IssueCategory.new
       ic.attributes = source_issue_category.attributes
