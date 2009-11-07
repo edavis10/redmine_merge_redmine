@@ -25,6 +25,7 @@ class SourceProject < ActiveRecord::Base
       end
 
       p.save!
+      RedmineMerge::Mapper.add_project(source_project.id, p.id)
     end
   end
 end
