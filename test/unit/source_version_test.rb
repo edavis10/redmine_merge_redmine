@@ -17,7 +17,7 @@ class SourceVersionTest < Test::Unit::TestCase
     should "skip Versions that already exist in the destination, based on name" do
       SourceVersion.migrate
 
-      assert_equal 1, SourceVersion.count(:conditions => {:name => '0.1'})
+      assert_equal 1, Version.count(:conditions => {:name => '0.1'})
     end
 
     should "associate Versions with the newly merged projects" do

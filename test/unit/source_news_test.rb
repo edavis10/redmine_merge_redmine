@@ -17,7 +17,7 @@ class SourceNewsTest < Test::Unit::TestCase
     should "skip News that already exist in the destination, based on name" do
       SourceNews.migrate
 
-      assert_equal 1, SourceNews.count(:conditions => {:title => '100,000 downloads for eCookbook'})
+      assert_equal 1, News.count(:conditions => {:title => '100,000 downloads for eCookbook'})
     end
 
     should "associate News with the newly merged projects" do
