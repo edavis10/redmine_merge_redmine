@@ -8,12 +8,7 @@ class SourceUserTest < Test::Unit::TestCase
       User.generate_with_protected!(:login => 'jsmith', :mail => 'jsmith@somenet.foo')
     end
     
-    should "add each user from the source database to the destination database" do
-      # Skips the two users above
-      assert_difference("User.count", 4) do
-        SourceUser.migrate
-      end
-    end
+    should_add_each_record_from_the_source_to_the_destination(User, 4) { SourceUser.migrate }
 
     should "skip the anonymous user" do
       SourceUser.migrate

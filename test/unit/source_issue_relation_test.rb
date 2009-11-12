@@ -14,11 +14,7 @@ class SourceIssueRelationTest < Test::Unit::TestCase
       SourceIssue.migrate
     end
     
-    should "add each Issue Relation from the source database to the destination database" do
-      assert_difference("IssueRelation.count", 3) do
-        SourceIssueRelation.migrate
-      end
-    end
+    should_add_each_record_from_the_source_to_the_destination(IssueRelation, 3) { SourceIssueRelation.migrate }
 
     should "keep the issue_from and issue_to associations" do
       SourceIssueRelation.migrate

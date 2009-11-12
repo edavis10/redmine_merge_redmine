@@ -8,11 +8,7 @@ class SourceIssueCategoryTest < Test::Unit::TestCase
       SourceProject.migrate
     end
     
-    should "add each IssueCategory from the source database to the destination database" do
-      assert_difference("IssueCategory.count", 4) do
-        SourceIssueCategory.migrate
-      end
-    end
+    should_add_each_record_from_the_source_to_the_destination(IssueCategory, 4) { SourceIssueCategory.migrate }
 
     should "skip Issue Categories that already exist in the destination, based on name and project" do
       SourceIssueCategory.migrate

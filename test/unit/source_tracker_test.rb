@@ -10,11 +10,7 @@ class SourceTrackerTest < Test::Unit::TestCase
       Tracker.generate!(:name => 'Bug')
     end
     
-    should "add each tracker from the source database to the destination database" do
-      assert_difference("Tracker.count", 2) do
-        SourceTracker.migrate
-      end
-    end
+    should_add_each_record_from_the_source_to_the_destination(Tracker, 2) { SourceTracker.migrate }
 
     should "skip trackers that already exist in the destination, based on name" do
       SourceTracker.migrate

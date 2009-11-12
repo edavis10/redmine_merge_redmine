@@ -13,11 +13,7 @@ class SourceIssueTest < Test::Unit::TestCase
       SourceIssueCategory.migrate
     end
     
-    should "add each Issue from the source database to the destination database" do
-      assert_difference("Issue.count", 8) do
-        SourceIssue.migrate
-      end
-    end
+    should_add_each_record_from_the_source_to_the_destination(Issue, 8) { SourceIssue.migrate }
 
     should "keep the tracker association" do
       SourceIssue.migrate

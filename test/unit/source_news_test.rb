@@ -7,12 +7,8 @@ class SourceNewsTest < Test::Unit::TestCase
       News.generate!(:title => "100,000 downloads for eCookbook", :description => 'Yay')
       SourceProject.migrate
     end
-    
-    should "add each News from the source database to the destination database" do
-      assert_difference("News.count", 1) do
-        SourceNews.migrate
-      end
-    end
+
+    should_add_each_record_from_the_source_to_the_destination(News, 1) { SourceNews.migrate }
 
     should "skip News that already exist in the destination, based on name" do
       SourceNews.migrate

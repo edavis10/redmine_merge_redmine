@@ -11,12 +11,7 @@ class SourceProjectTest < Test::Unit::TestCase
       Project.generate!(:identifier => 'onlinestore')
     end
     
-    should "add each project from the source database to the destination database" do
-      # Skip the two projects above
-      assert_difference("Project.count", 4) do
-        SourceProject.migrate
-      end
-    end
+    should_add_each_record_from_the_source_to_the_destination(Project, 4) { SourceProject.migrate }
 
     should "skip projects that already exist in the destination, based on name" do
       SourceProject.migrate

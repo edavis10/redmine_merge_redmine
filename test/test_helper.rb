@@ -21,6 +21,18 @@ def User.generate_with_protected!(attributes={})
   user
 end
 
+class Test::Unit::TestCase
+
+  def self.should_add_each_record_from_the_source_to_the_destination(model, count, &block)
+    should "add each record from the source database to the destination database" do
+      assert_difference("#{model}.count", count) do
+        instance_eval &block
+      end
+    end
+  end
+  
+end
+
 # Override the actual second database connection code in order to test
 # against a known database
 module SecondDatabase

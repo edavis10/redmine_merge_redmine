@@ -8,11 +8,7 @@ class SourceIssueStatusTest < Test::Unit::TestCase
       IssueStatus.generate!(:name => 'Closed')
     end
     
-    should "add each Issue Status from the source database to the destination database" do
-      assert_difference("IssueStatus.count", 4) do
-        SourceIssueStatus.migrate
-      end
-    end
+    should_add_each_record_from_the_source_to_the_destination(IssueStatus, 4) { SourceIssueStatus.migrate }
 
     should "skip Issue Status that already exist in the destination, based on name" do
       SourceIssueStatus.migrate

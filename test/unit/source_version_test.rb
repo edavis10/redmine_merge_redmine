@@ -8,11 +8,7 @@ class SourceVersionTest < Test::Unit::TestCase
       SourceProject.migrate
     end
     
-    should "add each Version from the source database to the destination database" do
-      assert_difference("Version.count", 2) do
-        SourceVersion.migrate
-      end
-    end
+    should_add_each_record_from_the_source_to_the_destination(Version, 2) { SourceVersion.migrate }
 
     should "skip Versions that already exist in the destination, based on name" do
       SourceVersion.migrate

@@ -6,12 +6,8 @@ class SourceEnumerationTest < Test::Unit::TestCase
       User.anonymous # preload
       Enumeration.generate!(:opt => "IPRI", :name => "Low")
     end
-    
-    should "add each Issue Priority from the source database to the destination database" do
-      assert_difference("Enumeration.count", 4) do
-        SourceEnumeration.migrate_issue_priorities
-      end
-    end
+
+    should_add_each_record_from_the_source_to_the_destination(Enumeration, 4) { SourceEnumeration.migrate_issue_priorities }
 
     should "skip Issue Priorities that already exist in the destination, based on name" do
       SourceEnumeration.migrate_issue_priorities

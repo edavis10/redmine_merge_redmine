@@ -6,12 +6,8 @@ class SourceCustomFieldTest < Test::Unit::TestCase
       User.anonymous # preload
       CustomField.generate!(:name => 'Database', :field_format => 'string')
     end
-    
-    should "add each Custom Field from the source database to the destination database" do
-      assert_difference("CustomField.count", 5) do
-        SourceCustomField.migrate
-      end
-    end
+
+    should_add_each_record_from_the_source_to_the_destination(CustomField, 5) { SourceCustomField.migrate }
 
     should "skip Custom Fields that already exist in the destination, based on name" do
       SourceTracker.migrate
