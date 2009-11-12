@@ -18,6 +18,7 @@ class RedmineMerge
 
   class Mapper
     Projects = {}
+    Journals = {}
 
     def self.add_project(source_id, new_id)
       Projects[source_id] = new_id
@@ -25,6 +26,14 @@ class RedmineMerge
 
     def self.get_new_project_id(source_id)
       Projects[source_id]
+    end
+
+    def self.add_journal(source_id, new_id)
+      Journals[source_id] = new_id
+    end
+
+    def self.get_new_journal_id(source_id)
+      Journals[source_id]
     end
   end
 end

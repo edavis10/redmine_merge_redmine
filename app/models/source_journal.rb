@@ -12,6 +12,8 @@ class SourceJournal < ActiveRecord::Base
       j.attributes = source_journals.attributes
       j.issue = Issue.find_by_subject(source_journals.issue.subject)
       j.save!
+
+      RedmineMerge::Mapper.add_journal(source_journals.id, j.id)
     end
   end
 end
