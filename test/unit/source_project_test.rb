@@ -50,9 +50,10 @@ class SourceProjectTest < Test::Unit::TestCase
       project = Project.find_by_identifier('subproject1')
 
       assert project
-      assert_equal 2, project.trackers.length
+      assert_equal 3, project.trackers.length
       assert project.trackers.include?(Tracker.find_by_name('Feature request'))
       assert project.trackers.include?(Tracker.find_by_name('Support request'))
+      assert project.trackers.include?(Tracker.find_by_name('Bug'))
     end
   end
 end
