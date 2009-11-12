@@ -4,6 +4,7 @@ class RedmineMerge
     SourceCustomField.migrate
     SourceTracker.migrate
     SourceIssueStatus.migrate
+    SourceEnumeration.migrate_issue_priorities
 
     # Project-specific data
     SourceProject.migrate
