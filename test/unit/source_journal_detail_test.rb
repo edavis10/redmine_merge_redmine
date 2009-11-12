@@ -5,14 +5,16 @@ class SourceJournalDetailTest < Test::Unit::TestCase
     setup do
       User.anonymous # preload
 
-      # Make sure Journals are associating correctly and not that they
-      # just happen to match ids.
+      # Make sure objects associating correctly and not that they just
+      # happen to match ids.
       @project = Project.generate!
       @tracker = Tracker.generate!
       @project.trackers << @tracker
       @enumeration = Enumeration.generate!(:opt => 'IPRI')
       @issue = Issue.generate!(:tracker => @tracker, :project => @project, :priority => @enumeration)
       Journal.generate!(:issue => @issue)
+      IssueStatus.generate!(:name => 'New')
+      IssueStatus.generate!(:name => 'Closed')
 
       SourceUser.migrate
       SourceTracker.migrate
@@ -38,11 +40,22 @@ class SourceJournalDetailTest < Test::Unit::TestCase
       journal = issue.journals.find_by_notes("Journal notes")
       assert journal
       assert_equal 2, journal.details.count
-      journal.details.each do |detail|
-        assert detail.prop_key == "status_id" || detail.prop_key == "done_ratio"
-        assert detail.old_value == '1' || detail.old_value == '40'
-        assert detail.value = '2' || detail.value == '30'
-      end
+    end
+
+    should "remap the property associations" do
+      SourceJournalDetail.migrate
+      
+      issue = Issue.find_by_subject("Can't print recipes")
+      assert issue
+
+      journal = issue.journals.find_by_notes("Journal notes")
+      assert journal
+
+      detail = journal.details.find_by_prop_key('status_id')
+      assert detail
+
+      assert_equal IssueStatus.find_by_name('New').id, detail.old_value.to_i
+      assert_equal IssueStatus.find_by_name('Assigned').id, detail.value.to_i
     end
 
   end
