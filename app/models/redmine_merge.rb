@@ -13,6 +13,7 @@ class RedmineMerge
     SourceIssueCategory.migrate
     SourceIssue.migrate
     SourceIssueRelation.migrate
+    SourceJournal.migrate
   end
 
   class Mapper
