@@ -6,7 +6,7 @@ class SourceUser < ActiveRecord::Base
     all.each do |source_user|
       next if User.find_by_mail(source_user.mail)
       next if User.find_by_login(source_user.login)
-      next if source_user.anonymous?
+      next if source_user.type == "AnonymousUser"
       
       u = User.new
       u.attributes = source_user.attributes
