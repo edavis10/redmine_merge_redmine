@@ -61,13 +61,13 @@ class RedmineMerge
         return target.id if target
         return nil
       when 'IssueCategory'
-        source = SourceIssueCategory.find(source_id)
+        source = SourceIssueCategory.find_by_id(source_id)
         return nil unless source
         target = IssueCategory.find_by_name_and_project_id(source.name, RedmineMerge::Mapper.get_new_project_id(source.project_id))
         return target.id if target
         return nil
       when 'Version'
-        source = SourceVersion.find(source_id)
+        source = SourceVersion.find_by_id(source_id)
         return nil unless source
         target = Version.find_by_name_and_project_id(source.name, RedmineMerge::Mapper.get_new_project_id(source.project_id))
         return target.id if target
@@ -80,7 +80,7 @@ class RedmineMerge
 
     # Utility method to dynamically find the target records
     def self.find_target_record_from_source(source_klass, target_klass, field, source_id)
-      source = source_klass.find(source_id)
+      source = source_klass.find_by_id(source_id)
       field = field.to_sym
       if source
         return target_klass.find(:first, :conditions => {field => source.read_attribute(field) })
