@@ -5,6 +5,8 @@ class RedmineMerge
     SourceTracker.migrate
     SourceIssueStatus.migrate
     SourceEnumeration.migrate_issue_priorities
+    SourceEnumeration.migrate_time_entry_activities
+    SourceEnumeration.migrate_document_categories
 
     # Project-specific data
     SourceProject.migrate
