@@ -11,4 +11,15 @@ class SourceEnumeration < ActiveRecord::Base
       p.save!
     end
   end
+
+  def self.migrate_time_entry_activities
+    all(:conditions => {:opt => "ACTI"}) .each do |source_activity|
+      next if Enumeration.activities.find_by_name(source_activity.name)
+
+      a = Enumeration.new(:opt => "ACTI")
+      a.attributes = source_activity.attributes
+      a.save!
+    end
+  end
+
 end

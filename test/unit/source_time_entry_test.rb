@@ -12,11 +12,13 @@ class SourceTimeEntryTest < Test::Unit::TestCase
       @project.trackers << @tracker
       @enumeration = Enumeration.generate!(:opt => 'IPRI')
       Issue.generate!(:tracker => @tracker, :project => @project, :priority => @enumeration)
+      Enumeration.generate!(:opt => "ACTI", :name => "Design")
 
       SourceUser.migrate
       SourceTracker.migrate
       SourceIssueStatus.migrate
       SourceEnumeration.migrate_issue_priorities
+      SourceEnumeration.migrate_time_entry_activities
       SourceProject.migrate
       SourceVersion.migrate
       SourceIssueCategory.migrate
@@ -50,6 +52,14 @@ class SourceTimeEntryTest < Test::Unit::TestCase
       time_entry = TimeEntry.find_by_comments("Time spent on a subproject")
       assert time_entry
       assert_equal User.find_by_login('admin'), time_entry.user
+    end
+
+    should "keep the activity association" do
+      SourceTimeEntry.migrate
+
+      time_entry = TimeEntry.find_by_comments("My hours")
+      assert time_entry
+      assert_equal Enumeration.find_by_name('Design'), time_entry.activity
     end
   end
 end
