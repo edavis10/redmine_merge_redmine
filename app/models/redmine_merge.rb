@@ -15,10 +15,12 @@ class RedmineMerge
     SourceIssueRelation.migrate
     SourceJournal.migrate
     SourceJournalDetail.migrate
+    SourceTimeEntry.migrate
   end
 
   class Mapper
     Projects = {}
+    Issues = {}
     Journals = {}
 
     def self.add_project(source_id, new_id)
@@ -27,6 +29,14 @@ class RedmineMerge
 
     def self.get_new_project_id(source_id)
       Projects[source_id]
+    end
+
+    def self.add_issue(source_id, new_id)
+      Issues[source_id] = new_id
+    end
+
+    def self.get_new_issue_id(source_id)
+      Issues[source_id]
     end
 
     def self.add_journal(source_id, new_id)

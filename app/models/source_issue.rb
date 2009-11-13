@@ -25,6 +25,7 @@ class SourceIssue < ActiveRecord::Base
       i.category = IssueCategory.find_by_name(source_issue.category.name) if source_issue.category
 
       i.save!
+      RedmineMerge::Mapper.add_issue(source_issue.id, i.id)
     end
   end
 end
