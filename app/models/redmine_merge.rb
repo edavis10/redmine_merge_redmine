@@ -18,6 +18,7 @@ class RedmineMerge
     SourceJournal.migrate
     SourceJournalDetail.migrate
     SourceTimeEntry.migrate
+    SourceDocument.migrate
   end
 
   class Mapper
