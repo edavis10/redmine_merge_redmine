@@ -22,4 +22,14 @@ class SourceEnumeration < ActiveRecord::Base
     end
   end
 
+  def self.migrate_document_categories
+    all(:conditions => {:opt => "DCAT"}) .each do |source_document_category|
+      next if Enumeration.document_categories.find_by_name(source_document_category.name)
+
+      dc = Enumeration.new(:opt => "DCAT")
+      dc.attributes = source_document_category.attributes
+      dc.save!
+    end
+  end
+
 end

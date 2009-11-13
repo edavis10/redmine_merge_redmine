@@ -30,4 +30,19 @@ class SourceEnumerationTest < Test::Unit::TestCase
       assert_equal 1, Enumeration.count(:conditions => {:name => 'Design'})
     end
   end
+
+  context "#migrate_document_categories" do
+    setup do
+      User.anonymous # preload
+      Enumeration.generate!(:opt => "DCAT", :name => "Technical documentation")
+    end
+
+    should_add_each_record_from_the_source_to_the_destination(Enumeration, 2) { SourceEnumeration.migrate_document_categories }
+
+    should "skip Document Categories that already exist in the destination, based on name" do
+      SourceEnumeration.migrate_document_categories
+
+      assert_equal 1, Enumeration.count(:conditions => {:name => 'Technical documentation'})
+    end
+  end
 end
