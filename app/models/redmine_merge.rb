@@ -19,12 +19,17 @@ class RedmineMerge
     SourceJournalDetail.migrate
     SourceTimeEntry.migrate
     SourceDocument.migrate
+    SourceWiki.migrate
+    SourceWikiPage.migrate
+    SourceWikiContent.migrate
   end
 
   class Mapper
     Projects = {}
     Issues = {}
     Journals = {}
+    Wikis = {}
+    WikiPages = {}
 
     def self.add_project(source_id, new_id)
       Projects[source_id] = new_id
@@ -48,6 +53,22 @@ class RedmineMerge
 
     def self.get_new_journal_id(source_id)
       Journals[source_id]
+    end
+
+    def self.add_wiki(source_id, new_id)
+      Wikis[source_id] = new_id
+    end
+
+    def self.get_new_wiki_id(source_id)
+      Wikis[source_id]
+    end
+
+    def self.add_wiki_page(source_id, new_id)
+      WikiPages[source_id] = new_id
+    end
+
+    def self.get_new_wiki_page_id(source_id)
+      WikiPages[source_id]
     end
 
     def self.find_id_by_property(target_klass, source_id)
