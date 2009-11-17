@@ -9,19 +9,19 @@ class SourceNewsTest < Test::Unit::TestCase
       SourceProject.migrate
     end
 
-    should_add_each_record_from_the_source_to_the_destination(News, 1) { SourceNews.migrate }
+    should_add_each_record_from_the_source_to_the_destination(News, 2) { SourceNews.migrate }
 
-    should "skip News that already exist in the destination, based on name" do
+    should "allow duplicate News items per project" do
       SourceNews.migrate
 
-      assert_equal 1, News.count(:conditions => {:title => '100,000 downloads for eCookbook'})
+      assert_equal 2, News.count(:conditions => {:title => '100,000 downloads for eCookbook'})
     end
 
     should "associate News with the newly merged projects" do
       SourceNews.migrate
 
       project = Project.find_by_name('eCookbook')
-      assert_equal 1, project.news.length # 2nd wasn't migrate due to name conflict
+      assert_equal 2, project.news.length
       assert project.news.collect(&:title).include? 'eCookbook first release !'
     end
 
