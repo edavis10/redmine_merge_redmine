@@ -5,6 +5,7 @@ class SourceNewsTest < Test::Unit::TestCase
     setup do
       User.anonymous # preload
       News.generate!(:title => "100,000 downloads for eCookbook", :description => 'Yay')
+      SourceUser.migrate
       SourceProject.migrate
     end
 
@@ -23,5 +24,14 @@ class SourceNewsTest < Test::Unit::TestCase
       assert_equal 1, project.news.length # 2nd wasn't migrate due to name conflict
       assert project.news.collect(&:title).include? 'eCookbook first release !'
     end
+
+    should "keep the author association" do
+      SourceNews.migrate
+
+      news = News.find_by_title('eCookbook first release !')
+      assert news
+      assert_equal "jsmith", news.author.login
+    end
+
   end
 end
