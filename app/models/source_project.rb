@@ -6,7 +6,7 @@ class SourceProject < ActiveRecord::Base
   has_and_belongs_to_many :trackers, :class_name => 'SourceTracker', :join_table => 'projects_trackers', :foreign_key => 'project_id', :association_foreign_key => 'tracker_id'
   
   def self.migrate
-    all.each do |source_project|
+    all(:order => 'lft ASC').each do |source_project|
       next if Project.find_by_name(source_project.name)
       next if Project.find_by_identifier(source_project.identifier)
       
@@ -25,6 +25,10 @@ class SourceProject < ActiveRecord::Base
       end
 
       p.save!
+      # Parent/child projects
+      if source_project.parent_id
+        p.set_parent!(Project.find_by_id(RedmineMerge::Mapper.get_new_project_id(source_project.parent_id)))
+      end
       RedmineMerge::Mapper.add_project(source_project.id, p.id)
     end
   end

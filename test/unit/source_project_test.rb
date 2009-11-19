@@ -50,5 +50,22 @@ class SourceProjectTest < Test::Unit::TestCase
       assert project.trackers.include?(Tracker.find_by_name('Support request'))
       assert project.trackers.include?(Tracker.find_by_name('Bug'))
     end
+
+    should "keep the parent project association" do
+      Project.find_by_name('eCookbook').destroy
+      SourceProject.migrate
+
+      project = Project.find_by_identifier('ecookbook')
+      subproject = Project.find_by_identifier('subproject1')
+      subproject2 = Project.find_by_identifier('private-child')
+      sub_sub_project = Project.find_by_identifier('another')
+
+      assert project
+      assert subproject
+      assert sub_sub_project
+      assert_equal project, subproject.parent
+      assert_equal project, subproject2.parent
+      assert_equal subproject2, sub_sub_project.parent
+    end
   end
 end
