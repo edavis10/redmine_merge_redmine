@@ -1,21 +1,5 @@
 require 'redmine'
 
-if Rails.env == "test"
-  
-  # Bootstrap ObjectDaddy since it's needs to load before the Models
-  # (it hooks into ActiveRecord::Base.inherited)
-  require 'object_daddy'
-
-  # Use the plugin's exemplar_path :nodoc:
-  module ::ObjectDaddy
-    module RailsClassMethods
-      def exemplar_path
-        File.join(File.dirname(__FILE__), 'test', 'exemplars')
-      end
-    end
-  end
-end
-
 require 'second_database'
 
 Redmine::Plugin.register :redmine_merge_redmine do
