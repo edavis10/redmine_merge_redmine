@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class SourceWikiContentTest < Test::Unit::TestCase
+class SourceWikiContentTest < ActiveSupport::TestCase
   context "#migrate" do
     setup do
       User.anonymous # preload

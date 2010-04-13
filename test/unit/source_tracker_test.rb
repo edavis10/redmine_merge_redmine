@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 
-class SourceTrackerTest < Test::Unit::TestCase
+class SourceTrackerTest < ActiveSupport::TestCase
   context "#migrate" do
     setup do
       User.anonymous # preload
