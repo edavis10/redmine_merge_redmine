@@ -10,9 +10,9 @@ class SourceTimeEntryTest < ActiveSupport::TestCase
       @project = Project.generate!
       @tracker = Tracker.generate!
       @project.trackers << @tracker
-      @enumeration = Enumeration.generate!(:opt => 'IPRI')
+      @enumeration = IssuePriority.generate!
       Issue.generate!(:tracker => @tracker, :project => @project, :priority => @enumeration)
-      Enumeration.generate!(:opt => "ACTI", :name => "Design")
+      TimeEntryActivity.generate!(:name => "Design")
 
       SourceUser.migrate
       SourceTracker.migrate

@@ -21,7 +21,7 @@ class SourceIssue < ActiveRecord::Base
       i.assigned_to = User.find_by_login(source_issue.assigned_to.login) if source_issue.assigned_to
       i.status = IssueStatus.find_by_name(source_issue.status.name)
       i.tracker = Tracker.find_by_name(source_issue.tracker.name)
-      i.priority = Enumeration.find_by_opt_and_name('IPRI', source_issue.priority.name)
+      i.priority = IssuePriority.find_by_name(source_issue.priority.name)
       i.category = IssueCategory.find_by_name(source_issue.category.name) if source_issue.category
 
       i.save!

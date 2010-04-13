@@ -14,7 +14,7 @@ class SourceTimeEntry < ActiveRecord::Base
       te.attributes = source_time_entry.attributes
       te.user = User.find_by_login(source_time_entry.user.login)
       te.project = Project.find_by_name(source_time_entry.project.name)
-      te.activity = Enumeration.activities.find_by_name(source_time_entry.activity.name)
+      te.activity = TimeEntryActivity.find_by_name(source_time_entry.activity.name)
 
       # optional 
       te.issue = Issue.find_by_id(RedmineMerge::Mapper.get_new_issue_id(source_time_entry.issue.id)) if source_time_entry.issue_id

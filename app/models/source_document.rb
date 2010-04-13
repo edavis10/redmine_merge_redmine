@@ -10,7 +10,7 @@ class SourceDocument < ActiveRecord::Base
       d = Document.new
       d.attributes = source_document.attributes
       d.project = Project.find(RedmineMerge::Mapper.get_new_project_id(source_document.project_id))
-      d.category = Enumeration.document_categories.find_by_name(source_document.category.name)
+      d.category = DocumentCategory.find_by_name(source_document.category.name)
       d.save!
       RedmineMerge::Mapper.add_document(source_document.id, d.id)
     end

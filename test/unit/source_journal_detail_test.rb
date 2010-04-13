@@ -10,7 +10,7 @@ class SourceJournalDetailTest < ActiveSupport::TestCase
       @project = Project.generate!
       @tracker = Tracker.generate!
       @project.trackers << @tracker
-      @enumeration = Enumeration.generate!(:opt => 'IPRI')
+      @enumeration = IssuePriority.generate!
       @issue = Issue.generate!(:tracker => @tracker, :project => @project, :priority => @enumeration)
       Journal.generate!(:issue => @issue)
       IssueStatus.generate!(:name => 'New')

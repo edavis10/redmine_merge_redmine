@@ -4,7 +4,7 @@ class SourceDocumentTest < ActiveSupport::TestCase
   context "#migrate" do
     setup do
       User.anonymous # preload
-      Enumeration.generate!(:opt => "DCAT", :name => "Technical documentation")
+      DocumentCategory.generate!(:name => "Technical documentation")
       SourceEnumeration.migrate_document_categories
       SourceProject.migrate
     end
@@ -24,7 +24,7 @@ class SourceDocumentTest < ActiveSupport::TestCase
 
       document = Document.find_by_title('Test document')
       assert document
-      assert_equal Enumeration.document_categories.find_by_name('Uncategorized'), document.category
+      assert_equal DocumentCategory.find_by_name('Uncategorized'), document.category
     end
   end
 end
