@@ -10,26 +10,25 @@ class SourceProject < ActiveRecord::Base
       next if Project.find_by_name(source_project.name)
       next if Project.find_by_identifier(source_project.identifier)
       
-      p = Project.new
-      p.attributes = source_project.attributes
-      p.status = source_project.status
-      if source_project.enabled_modules
-        p.enabled_module_names = source_project.enabled_modules.collect(&:name)
-      end
+      project = Project.create!(source_project.attributes) do |p|
+        p.status = source_project.status
+        if source_project.enabled_modules
+          p.enabled_module_names = source_project.enabled_modules.collect(&:name)
+        end
 
-      if source_project.trackers
-        source_project.trackers.each do |source_tracker|
-          merged_tracker = Tracker.find_by_name(source_tracker.name)
-          p.trackers << merged_tracker if merged_tracker
+        if source_project.trackers
+          source_project.trackers.each do |source_tracker|
+            merged_tracker = Tracker.find_by_name(source_tracker.name)
+            p.trackers << merged_tracker if merged_tracker
+          end
         end
       end
-
-      p.save!
+      
       # Parent/child projects
       if source_project.parent_id
-        p.set_parent!(Project.find_by_id(RedmineMerge::Mapper.get_new_project_id(source_project.parent_id)))
+        project.set_parent!(Project.find_by_id(RedmineMerge::Mapper.get_new_project_id(source_project.parent_id)))
       end
-      RedmineMerge::Mapper.add_project(source_project.id, p.id)
+      RedmineMerge::Mapper.add_project(source_project.id, project.id)
     end
   end
 end

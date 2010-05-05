@@ -8,9 +8,7 @@ class SourceTracker < ActiveRecord::Base
     all.each do |source_tracker|
       next if Tracker.find_by_name(source_tracker.name)
 
-      t = Tracker.new
-      t.attributes = source_tracker.attributes
-      t.save!
+      Tracker.create!(source_tracker.attributes)
     end
   end
 end

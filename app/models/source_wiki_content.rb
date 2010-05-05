@@ -7,11 +7,10 @@ class SourceWikiContent < ActiveRecord::Base
   def self.migrate
     all.each do |source_wiki_content|
 
-      wc = WikiContent.new
-      wc.attributes = source_wiki_content.attributes
-      wc.page = WikiPage.find(RedmineMerge::Mapper.get_new_wiki_page_id(source_wiki_content.page_id))
-      wc.author = User.find_by_login(source_wiki_content.author.login)
-      wc.save!
+      WikiContent.create!(source_wiki_content.attributes) do |wc|
+        wc.page = WikiPage.find(RedmineMerge::Mapper.get_new_wiki_page_id(source_wiki_content.page_id))
+        wc.author = User.find_by_login(source_wiki_content.author.login)
+      end
     end
   end
 end

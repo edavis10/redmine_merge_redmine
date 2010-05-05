@@ -6,9 +6,7 @@ class SourceIssueStatus < ActiveRecord::Base
     all.each do |source_issue_status|
       next if IssueStatus.find_by_name(source_issue_status.name)
 
-      is = IssueStatus.new
-      is.attributes = source_issue_status.attributes
-      is.save!
+      IssueStatus.create!(source_issue_status.attributes)
     end
   end
 end

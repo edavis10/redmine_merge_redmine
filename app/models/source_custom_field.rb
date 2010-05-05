@@ -6,9 +6,7 @@ class SourceCustomField < ActiveRecord::Base
     all.each do |source_custom_field|
       next if CustomField.find_by_name(source_custom_field.name)
 
-      cf = CustomField.new
-      cf.attributes = source_custom_field.attributes
-      cf.save!
+      CustomField.create!(source_custom_field.attributes)
     end
   end
 end

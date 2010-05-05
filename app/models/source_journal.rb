@@ -8,12 +8,11 @@ class SourceJournal < ActiveRecord::Base
   def self.migrate
     all.each do |source_journals|
 
-      j = Journal.new
-      j.attributes = source_journals.attributes
-      j.issue = Issue.find_by_subject(source_journals.issue.subject)
-      j.save!
+      journal = Journal.create!(source_journals.attributes) do |j|
+        j.issue = Issue.find_by_subject(source_journals.issue.subject)
+      end
 
-      RedmineMerge::Mapper.add_journal(source_journals.id, j.id)
+      RedmineMerge::Mapper.add_journal(source_journals.id, journal.id)
     end
   end
 end

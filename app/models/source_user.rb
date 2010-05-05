@@ -8,12 +8,11 @@ class SourceUser < ActiveRecord::Base
       next if User.find_by_login(source_user.login)
       next if source_user.type == "AnonymousUser"
       
-      u = User.new
-      u.attributes = source_user.attributes
-      u.login = source_user.login
-      u.admin = source_user.admin
-      u.hashed_password = source_user.hashed_password
-      u.save!
+      User.create!(source_user.attributes) do |u|
+        u.login = source_user.login
+        u.admin = source_user.admin
+        u.hashed_password = source_user.hashed_password
+      end
     end
   end
 end

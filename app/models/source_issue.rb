@@ -13,19 +13,17 @@ class SourceIssue < ActiveRecord::Base
   def self.migrate
     all.each do |source_issue|
 
-      i = Issue.new
-      i.attributes = source_issue.attributes
-
-      i.project = Project.find_by_name(source_issue.project.name)
-      i.author = User.find_by_login(source_issue.author.login)
-      i.assigned_to = User.find_by_login(source_issue.assigned_to.login) if source_issue.assigned_to
-      i.status = IssueStatus.find_by_name(source_issue.status.name)
-      i.tracker = Tracker.find_by_name(source_issue.tracker.name)
-      i.priority = IssuePriority.find_by_name(source_issue.priority.name)
-      i.category = IssueCategory.find_by_name(source_issue.category.name) if source_issue.category
-
-      i.save!
-      RedmineMerge::Mapper.add_issue(source_issue.id, i.id)
+      issue = Issue.create!(source_issue.attributes) do |i|
+        i.project = Project.find_by_name(source_issue.project.name)
+        i.author = User.find_by_login(source_issue.author.login)
+        i.assigned_to = User.find_by_login(source_issue.assigned_to.login) if source_issue.assigned_to
+        i.status = IssueStatus.find_by_name(source_issue.status.name)
+        i.tracker = Tracker.find_by_name(source_issue.tracker.name)
+        i.priority = IssuePriority.find_by_name(source_issue.priority.name)
+        i.category = IssueCategory.find_by_name(source_issue.category.name) if source_issue.category
+      end
+      
+      RedmineMerge::Mapper.add_issue(source_issue.id, issue.id)
     end
   end
 end
