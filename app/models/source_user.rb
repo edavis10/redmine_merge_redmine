@@ -4,6 +4,7 @@ class SourceUser < ActiveRecord::Base
 
   def self.migrate
     all.each do |source_user|
+      next if source_user.login.blank? ## ignore the illegal user record in DB
       next if User.find_by_mail(source_user.mail)
       next if User.find_by_login(source_user.login)
       next if source_user.type == "AnonymousUser"
