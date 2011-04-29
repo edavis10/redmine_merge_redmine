@@ -33,6 +33,15 @@ class RedmineMerge
     WikiPages = {}
     Documents = {}
     Versions = {}
+    Users = {}
+
+    def self.add_user(source_id, new_id)
+      Users[source_id] = new_id
+    end
+
+    def self.get_new_user_id(source_id)
+      Users[source_id]
+    end
 
     def self.add_project(source_id, new_id)
       Projects[source_id] = new_id
