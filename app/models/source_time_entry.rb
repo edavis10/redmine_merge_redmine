@@ -12,7 +12,7 @@ class SourceTimeEntry < ActiveRecord::Base
     all.each do |source_time_entry|
       TimeEntry.create!(source_time_entry.attributes) do |te|
         te.user = User.find_by_mail(source_time_entry.user.mail)
-        te.user = User.find_by_login(source_time_entry.user.login) unless user
+        te.user = User.find_by_login(source_time_entry.user.login) unless te.user
         te.project = Project.find_by_name(source_time_entry.project.name)
         te.activity = TimeEntryActivity.find_by_name(source_time_entry.activity.name)
 
