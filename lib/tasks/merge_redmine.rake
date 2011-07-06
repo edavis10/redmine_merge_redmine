@@ -28,6 +28,7 @@ namespace :redmine do
   
   desc 'Merge two Redmine databases'
   task :merge_redmine => :environment do
+    Thread.current[:planio_account] = ENV['planio_account']
     RedmineMerge.migrate
   end
 end
