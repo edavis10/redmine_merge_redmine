@@ -17,9 +17,9 @@ class SourceIssue < ActiveRecord::Base
       issue = Issue.create!(source_issue.attributes) do |i|
         i.project = Project.find_by_name(source_issue.project.name)
         puts "-- Set project #{i.project.name}"
-        i.author = User.find_by_login(source_issue.author.login)
+        i.author = User.find(RedmineMerge::Mapper.get_new_user_id(source_issue.author.id))
         puts "-- Set author #{i.author}"
-        i.assigned_to = User.find_by_login(source_issue.assigned_to.login) if source_issue.assigned_to
+        i.assigned_to = User.find(RedmineMerge::Mapper.get_new_user_id(source_issue.assigned_to.id)) if source_issue.assigned_to
         puts "-- Set assignee #{i.assigned_to}"
         i.status = IssueStatus.find_by_name(source_issue.status.name)
         puts "-- Set issue status #{i.status}"

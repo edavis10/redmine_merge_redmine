@@ -9,7 +9,7 @@ class SourceWikiContent < ActiveRecord::Base
 
       WikiContent.create!(source_wiki_content.attributes) do |wc|
         wc.page = WikiPage.find(RedmineMerge::Mapper.get_new_wiki_page_id(source_wiki_content.page_id))
-        wc.author = User.find_by_login(source_wiki_content.author.login)
+        wc.author = User.find(RedmineMerge::Mapper.get_new_user_id(source_wiki_content.author.id))
       end
     end
   end

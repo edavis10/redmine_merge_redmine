@@ -8,7 +8,7 @@ class SourceAttachment < ActiveRecord::Base
     all.each do |source_attachment|
 
       Attachment.create!(source_attachment.attributes) do |a|
-        a.author = User.find_by_login(source_attachment.author.login)
+        a.author = User.find(RedmineMerge::Mapper.get_new_user_id(source_attachment.author.id))
         a.container = case source_attachment.container_type
                       when "Issue"
                         Issue.find RedmineMerge::Mapper.get_new_issue_id(source_attachment.container_id)
