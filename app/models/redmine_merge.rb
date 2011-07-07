@@ -24,15 +24,25 @@ class RedmineMerge
     SourceNews.migrate
     puts 'Migrating issue categories...'
     SourceIssueCategory.migrate
+    puts 'Migrating issues...'
     SourceIssue.migrate
+    puts 'Migrating issue relations...'
     SourceIssueRelation.migrate
+    puts 'Migrating journals...'
     SourceJournal.migrate
+    puts 'Migrating journal details...'
     SourceJournalDetail.migrate
+    puts 'Migrating time entries...'
     SourceTimeEntry.migrate
+    puts 'Migrating documents...'
     SourceDocument.migrate
+    puts 'Migrating wikis...'
     SourceWiki.migrate
+    puts 'Migrating wiki pages...'
     SourceWikiPage.migrate
+    puts 'Migrating wiki contents...'
     SourceWikiContent.migrate
+    puts 'Migrating attachments...'
     SourceAttachment.migrate
   end
 
