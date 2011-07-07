@@ -13,7 +13,7 @@ class SourceIssue < ActiveRecord::Base
   
   def self.migrate
     all.each do |source_issue|
-      puts "- Migrating Issue ##{source_issue.id}: #{source_issue.subject}"
+      puts "- Migrating issue ##{source_issue.id}: #{source_issue.subject}"
       issue = Issue.create!(source_issue.attributes) do |i|
         i.project = Project.find_by_name(source_issue.project.name)
         puts "-- Set project #{i.project.name}"
@@ -32,6 +32,7 @@ class SourceIssue < ActiveRecord::Base
         if source_issue.fixed_version and version = Version.find(RedmineMerge::Mapper.get_new_version_id(source_issue.fixed_version.id))
           i.instance_variable_set :@assignable_versions, [version]
           i.fixed_version = version
+          puts "-- Set fixed version #{i.fixed_version}"
         end
       end
       
