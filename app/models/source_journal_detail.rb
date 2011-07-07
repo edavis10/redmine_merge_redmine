@@ -10,7 +10,7 @@ class SourceJournalDetail < ActiveRecord::Base
       JournalDetail.create!(source_journal_detail.attributes) do |jd|
         jd.journal = Journal.find(RedmineMerge::Mapper.get_new_journal_id(source_journal_detail.journal_id))
 
-        # Need to remap propery keys to their new ids
+        # Need to remap property keys to their new ids
         if source_journal_detail.prop_key.include?('_id')
           property_name = source_journal_detail.prop_key.to_s.gsub(/\_id$/, "").to_sym
           association = Issue.reflect_on_all_associations.detect {|a| a.name == property_name }
