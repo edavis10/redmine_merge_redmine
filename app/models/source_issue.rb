@@ -9,6 +9,7 @@ class SourceIssue < ActiveRecord::Base
   belongs_to :project, :class_name => 'SourceProject', :foreign_key => 'project_id'
   belongs_to :priority, :class_name => 'SourceEnumeration', :foreign_key => 'priority_id'
   belongs_to :category, :class_name => 'SourceIssueCategory', :foreign_key => 'category_id'
+  belongs_to :fixed_version, :class_name => 'SourceVersion', :foreign_key => 'fixed_version_id'
   
   def self.migrate
     all.each do |source_issue|
@@ -28,6 +29,10 @@ class SourceIssue < ActiveRecord::Base
         puts "-- Set issue priority #{i.priority}"
         i.category = IssueCategory.find_by_name(source_issue.category.name) if source_issue.category
         puts "-- Set category #{i.category}"
+        if source_issue.fixed_version and version = Version.find(RedmineMerge::Mapper.get_new_version_id(source_issue.fixed_version.id))
+          i.instance_variable_set :@assignable_versions, [version]
+          i.fixed_version = version
+        end
       end
       
       RedmineMerge::Mapper.add_issue(source_issue.id, issue.id)
