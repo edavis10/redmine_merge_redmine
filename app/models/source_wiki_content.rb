@@ -1,6 +1,6 @@
 class SourceWikiContent < ActiveRecord::Base
   include SecondDatabase
-  set_table_name :wiki_contents
+  self.table_name = "#{table_name_prefix}wiki_contents#{table_name_suffix}"
 
   belongs_to :author, :class_name => 'SourceUser', :foreign_key => 'author_id'
 

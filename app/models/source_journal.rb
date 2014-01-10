@@ -1,6 +1,6 @@
 class SourceJournal < ActiveRecord::Base
   include SecondDatabase
-  set_table_name :journals
+  self.table_name = "#{table_name_prefix}journals#{table_name_suffix}"
 
   belongs_to :journalized, :polymorphic => true
   belongs_to :issue, :class_name => 'SourceIssue', :foreign_key => :journalized_id

@@ -1,5 +1,5 @@
 class SourceEnabledModule < ActiveRecord::Base
   include SecondDatabase
-  set_table_name :enabled_modules
+  self.table_name = "#{table_name_prefix}enabled_modules#{table_name_suffix}"
 
 end

@@ -1,6 +1,6 @@
 class SourceCustomField < ActiveRecord::Base
   include SecondDatabase
-  set_table_name :custom_fields
+  self.table_name = "#{table_name_prefix}custom_fields#{table_name_suffix}"
 
   def self.migrate
     all.each do |source_custom_field|

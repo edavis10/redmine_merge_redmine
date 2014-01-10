@@ -1,6 +1,6 @@
 class SourceVersion < ActiveRecord::Base
   include SecondDatabase
-  set_table_name :versions
+  self.table_name = "#{table_name_prefix}versions#{table_name_suffix}"
 
   def self.migrate
     all.each do |source_version|

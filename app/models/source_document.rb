@@ -1,6 +1,6 @@
 class SourceDocument < ActiveRecord::Base
   include SecondDatabase
-  set_table_name :documents
+  self.table_name = "#{table_name_prefix}documents#{table_name_suffix}"
 
   belongs_to :category, :class_name => 'SourceEnumeration', :foreign_key => 'category_id'
 

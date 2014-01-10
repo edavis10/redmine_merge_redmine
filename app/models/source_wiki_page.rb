@@ -1,6 +1,6 @@
 class SourceWikiPage < ActiveRecord::Base
   include SecondDatabase
-  set_table_name :wiki_pages
+  self.table_name = "#{table_name_prefix}wiki_pages#{table_name_suffix}"
 
   def self.migrate
     all(:order => 'parent_id ASC').each do |source_wiki_page|

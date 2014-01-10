@@ -1,6 +1,7 @@
 class SourceEnumeration < ActiveRecord::Base
   include SecondDatabase
-  set_table_name :enumerations
+  self.table_name = "#{table_name_prefix}enumerations#{table_name_suffix}"
+  self.inheritance_column = "type_inheritance" # prevent's active record single table inheritance error
 
   def self.migrate_issue_priorities
     all(:conditions => {:type => "IssuePriority"}) .each do |source_issue_priority|
