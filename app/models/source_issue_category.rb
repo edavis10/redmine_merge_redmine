@@ -1,6 +1,6 @@
 class SourceIssueCategory < ActiveRecord::Base
   include SecondDatabase
-  set_table_name :issue_categories
+  self.table_name = "#{table_name_prefix}issue_categories#{table_name_suffix}"
 
   def self.migrate
     all.each do |source_issue_category|

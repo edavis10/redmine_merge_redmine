@@ -1,6 +1,6 @@
 class SourceTimeEntry < ActiveRecord::Base
   include SecondDatabase
-  set_table_name :time_entries
+  self.table_name = "#{table_name_prefix}time_entries#{table_name_suffix}"
 
   belongs_to :user, :class_name => 'SourceUser', :foreign_key => 'user_id'
   belongs_to :project, :class_name => 'SourceProject', :foreign_key => 'project_id'

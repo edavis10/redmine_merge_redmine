@@ -1,6 +1,6 @@
 class SourceWiki < ActiveRecord::Base
   include SecondDatabase
-  set_table_name :wikis
+  self.table_name = "#{table_name_prefix}wikis#{table_name_suffix}"
 
   def self.migrate
     all.each do |source_wiki|
