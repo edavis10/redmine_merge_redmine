@@ -7,9 +7,11 @@ class RedmineMerge
     SourceEnumeration.migrate_issue_priorities
     SourceEnumeration.migrate_time_entry_activities
     SourceEnumeration.migrate_document_categories
+    SourceRole.migrate
 
     # Project-specific data
     SourceProject.migrate
+    SourceMember.migrate
     SourceVersion.migrate
     SourceNews.migrate
     SourceIssueCategory.migrate
