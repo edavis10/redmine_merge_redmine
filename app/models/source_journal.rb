@@ -10,6 +10,7 @@ class SourceJournal < ActiveRecord::Base
 
       journal = Journal.create!(source_journals.attributes) do |j|
         j.issue = Issue.find_by_subject(source_journals.issue.subject)
+        j.user = User.find(RedmineMerge::Mapper.get_new_user_id(source_journals.user_id))
       end
 
       RedmineMerge::Mapper.add_journal(source_journals.id, journal.id)

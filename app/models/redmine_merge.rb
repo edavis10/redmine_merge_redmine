@@ -1,31 +1,53 @@
 class RedmineMerge
   def self.migrate
+    puts 'Migrating users...'
     SourceUser.migrate
+    puts 'Migrating custom fields...'
     SourceCustomField.migrate
+    puts 'Migrating trackers...'
     SourceTracker.migrate
+    puts 'Migrating issue status...'
     SourceIssueStatus.migrate
+    puts 'Migrating issue priorities...'
     SourceEnumeration.migrate_issue_priorities
+    puts 'Migrating time entry activities...'
     SourceEnumeration.migrate_time_entry_activities
+    puts 'Migrating document categories...'
     SourceEnumeration.migrate_document_categories
 
     # Project-specific data
+    puts 'Migrating projects...'
     SourceProject.migrate
+    puts 'Migrating versions...'
     SourceVersion.migrate
+    puts 'Migrating news...'
     SourceNews.migrate
+    puts 'Migrating issue categories...'
     SourceIssueCategory.migrate
+    puts 'Migrating issues...'
     SourceIssue.migrate
+    puts 'Migrating issue relations...'
     SourceIssueRelation.migrate
+    puts 'Migrating journals...'
     SourceJournal.migrate
+    puts 'Migrating journal details...'
     SourceJournalDetail.migrate
+    puts 'Migrating time entries...'
     SourceTimeEntry.migrate
+    puts 'Migrating documents...'
     SourceDocument.migrate
+    puts 'Migrating wikis...'
     SourceWiki.migrate
+    puts 'Migrating wiki pages...'
     SourceWikiPage.migrate
+    puts 'Migrating wiki contents...'
     SourceWikiContent.migrate
+    puts 'Migrating attachments...'
     SourceAttachment.migrate
   end
 
   class Mapper
+    Users = {}
     Projects = {}
     Issues = {}
     Journals = {}
@@ -33,6 +55,14 @@ class RedmineMerge
     WikiPages = {}
     Documents = {}
     Versions = {}
+
+    def self.add_user(source_id, new_id)
+      Users[source_id] = new_id
+    end
+
+    def self.get_new_user_id(source_id)
+      Users[source_id]
+    end
 
     def self.add_project(source_id, new_id)
       Projects[source_id] = new_id
